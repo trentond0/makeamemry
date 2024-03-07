@@ -11,15 +11,27 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            font-family: Helvetica, sans-serif;
         }
 
-        img {
-            max-width: 30%;
-            height: auto;
+        #memryText {
+            font-weight: bold;
+            font-size: 5vw; /* Adjust the percentage as needed */
+            color: black; /* Default text color */
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: black; /* Dark mode background color */
+            }
+
+            #memryText {
+                color: white; /* Dark mode text color */
+            }
         }
     </style>
 </head>
 <body>
-    <img src="images/memry.png" alt="memry">
+    <div id="memryText">memry</div>
 </body>
 </html>
