@@ -22,35 +22,34 @@
             align-items: center;
         }
 
-        .large-button {
-            border: none; /* Remove button border */
-            background: none; /* Remove button background */
+        .largeButton {
+            border: none;
+            background: none;
             font-weight: bold;
             font-size: 3vw;
-            cursor: pointer; /* Add pointer cursor on hover */
-        }
-
-        #video-preview {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            object-fit: cover; /* Ensure the video fills the container without distortion */
-        }
-
-        #shutter-button {
-            border: none; /* Remove button border */
-            background: none; /* Remove button background */
-            font-weight: bold;
-            font-size: 1.5vw;
             cursor: pointer;
         }
 
-        .small-button {
-            background: none;
+        .smallButton {
             border: none;
+            background: none;
             font-weight: bold;
             font-size: 1.5vw;
             cursor: pointer;
+        }
+
+        #photoPreview {
+            width: 90vh;
+            height: auto;
+            border-radius: 1vw;
+        }
+
+        #descriptionInput {
+            width: 100%;
+            padding: 10px;
+            border-radius: 0.5vw;
+            border: 1px solid #ccc;
+            font-size: 1.2vw;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -63,97 +62,67 @@
 </head>
 <body>
     <div class="container" id="container">
-        <div><button class="large-button" onclick="openCamera('memry')">make a memry</button></div>
+        <label for="photoInput" class="largeButton">make a memry
+            <input type="file" accept="image/*" capture style="display: none;" id="photoInput">
+        </label>
     </div>
-
-    <div id="camera-view" class="container" style="display: none;">
-        <div><button class="small-button" onclick="goBack()">back</button></div>
-        <div><video id="video-preview" autoplay></video></div>
-        <div><button id="shutter-button">make memry</button></div>
+    <div id="previewScreen" class="container" style="display: none;"> <!-- Initially hide the preview screen -->
+        <div><button class="smallButton" onclick="deletePhoto()">delete</button></div>
+        <div><img src="" id="photoPreview" alt="photo preview"></div>
+        <div><input type="text" id="descriptionInput" placeholder="enter a description"></div>
+        <div><button class="smallButton" onclick="makeMemry()">make memry</button></div>
     </div>
 
     <script>
-        let videoStream = null;
-
-        // Function to open the camera view
-        function openCamera(purpose) {
-            document.getElementById('container').style.display = 'none';
-            document.getElementById('camera-view').style.display = 'block';
-            initializeCamera();
-            document.getElementById('shutter-button').onclick = function() {
-                takePhoto(purpose);
-            };
-        }
+        const container = document.getElementById('container');
+        const previewScreen = document.getElementById('previewScreen');
+        const photoPreview = document.getElementById('photoPreview');
+        const photoInput = document.getElementById('photoInput');
 
         // Adjust video container size on window resize
         window.addEventListener('resize', function() {
-            var videoContainer = document.getElementById('video-preview');
             var minDimension = Math.min(window.innerWidth, window.innerHeight);
-            videoContainer.style.width = 0.9 * minDimension + 'px';
-            videoContainer.style.height = 0.9 * minDimension + 'px';
+            photoPreview.style.width = 0.9 * minDimension + 'px';
+            photoPreview.style.height = 0.9 * minDimension + 'px';
         });
 
-        // Set initial size
-        window.dispatchEvent(new Event('resize'));
-
-        // Function to initialize the camera
-        async function initializeCamera() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                const video = document.getElementById('video-preview');
-                videoStream = stream;
-                video.srcObject = stream;
-            } catch (err) {
-                console.error('Error accessing camera:', err);
+        // Function to show the preview of the taken photo
+        photoInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    photoPreview.src = e.target.result;
+                    container.style.display = 'none';
+                    previewScreen.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
             }
-        }
+        });
 
-        // Function to take a photo
-        function takePhoto(purpose) {
-            const video = document.getElementById('video-preview');
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
+        // Function to delete the photo and go back to the initial screen
+        function deletePhoto() {
+            photoPreview.src = '';
+            container.style.display = 'flex';
+            previewScreen.style.display = 'none';
+            document.getElementById('descriptionInput').value = '';
+        };
 
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoWidth; // Ensure canvas is square
-            ctx.drawImage(video, (video.videoWidth - video.videoHeight) / 2, 0, video.videoHeight, video.videoHeight, 0, 0, canvas.width, canvas.height); // Crop to square
-
-            // Stop video stream
-            video.srcObject.getVideoTracks().forEach(track => track.stop());
-            videoStream = null;
-
-            // Prompt user for a description
-            const description = prompt('Enter a description for the photo:');
-
-            // Convert canvas to image
-            const imgData = canvas.toDataURL('image/jpeg');
-
-            // Generate filename with description
+        // Function to download the photo and go back to the initial screen
+        function makeMemry() {
             const date = new Date();
+            const description = document.getElementById('descriptionInput').value;
             const fileName = `${date.getFullYear()}_${date.getMonth() + 1}_${date.getDate()} ${description}.jpg`;
 
-            // Create a link to download the image
-            const link = document.createElement('a');
-            link.href = imgData;
-            link.download = fileName;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            // Show the container and hide the camera view after taking the photo
-            document.getElementById('container').style.display = 'flex';
-            document.getElementById('camera-view').style.display = 'none';
-        }
-
-        // Function to go back to the container with buttons
-        function goBack() {
-            document.getElementById('container').style.display = 'flex';
-            document.getElementById('camera-view').style.display = 'none';
-            if (videoStream) {
-                videoStream.getTracks().forEach(track => track.stop());
-                videoStream = null;
-            }
-        }
+            const downloadLink = document.createElement('a');
+            downloadLink.href = photoPreview.src;
+            downloadLink.download = fileName;
+            downloadLink.click();
+            photoPreview.src = '';
+            container.style.display = 'flex';
+            previewScreen.style.display = 'none';
+            document.getElementById('descriptionInput').value = '';
+        };
     </script>
 </body>
 </html>
