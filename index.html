@@ -39,9 +39,10 @@
         }
 
         #photoPreview {
-            width: 90vh;
+            max-width: 90vw;
             height: auto;
             border-radius: 1vw;
+            object-fit: cover;
         }
 
         #descriptionInput {
@@ -85,6 +86,9 @@
             photoPreview.style.width = 0.9 * minDimension + 'px';
             photoPreview.style.height = 0.9 * minDimension + 'px';
         });
+
+        // Set initial size
+        window.dispatchEvent(new Event('resize'));
 
         // Function to show the preview of the taken photo
         photoInput.addEventListener('change', function(event) {
