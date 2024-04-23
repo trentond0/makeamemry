@@ -39,7 +39,7 @@
         }
 
         #photoPreview {
-            max-width: 90vw;
+            width: 100vw;
             height: auto;
             border-radius: 1vw;
             object-fit: cover;
@@ -79,16 +79,6 @@
         const previewScreen = document.getElementById('previewScreen');
         const photoPreview = document.getElementById('photoPreview');
         const photoInput = document.getElementById('photoInput');
-
-        // Adjust video container size on window resize
-        window.addEventListener('resize', function() {
-            var minDimension = Math.min(window.innerWidth, window.innerHeight);
-            photoPreview.style.width = 0.9 * minDimension + 'px';
-            photoPreview.style.height = 0.9 * minDimension + 'px';
-        });
-
-        // Set initial size
-        window.dispatchEvent(new Event('resize'));
 
         // Function to show the preview of the taken photo
         photoInput.addEventListener('change', function(event) {
