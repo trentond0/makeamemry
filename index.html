@@ -9,8 +9,6 @@
     <style>
         body {
             margin: 0;
-            font-family: Helvetica, sans-serif;
-            font-size: 16px;
         }
 
         .container {
@@ -21,6 +19,10 @@
 
         .largeButton, .smallButton {
             font-weight: bold;
+            color: black;
+            border: none;
+            background: none;
+            padding: 0;
             cursor: pointer;
         }
 
@@ -37,11 +39,26 @@
 
         #photoPreview {
             width: 100%;
+            border-radius: 10px;
+        }
+
+        #descriptionInput {
+            color: black;
+            border: none;
+            background: none;
         }
 
         @media (prefers-color-scheme: dark) {
             body {
                 background-color: black;
+                color: white;
+            }
+
+            .largeButton, .smallButton {
+                color: white;
+            }
+
+            #descriptionInput {
                 color: white;
             }
         }
