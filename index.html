@@ -2,18 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=2, viewport-fit=cover">
+    <meta id="viewport" name="viewport" content="width=device-width, user-scalable=no">
     <title>memry</title>
     <link rel="icon" type="image/png" href="images/icon.png">
     <link rel="apple-touch-icon" href="images/icon.png">
     <style>
-        body {
-            margin: 0;
-        }
-
         .container {
-            width: 90%;
             margin: 0 auto;
+            width: 90%;
             max-width: 500px;
         }
 
@@ -71,7 +67,7 @@
     </div>
     <div id="previewScreen" class="container" style="display: none;"> <!-- Initially hide the preview screen -->
         <div><button class="smallButton" onclick="deletePhoto()">delete</button></div>
-        <div><img src="" id="photoPreview" alt="photo preview"></div>
+        <div class="photoContainer"><img src="" id="photoPreview" alt="photo preview"></div>
         <div><input type="text" id="descriptionInput" placeholder="enter a description"></div>
         <div><button class="smallButton" onclick="makeMemry()">make memry</button></div>
     </div>
