@@ -37,11 +37,6 @@
 
         #photoPreview {
             width: 100%;
-            object-fit: cover;
-        }
-
-        #descriptionInput {
-            width: 100%;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -69,6 +64,7 @@
         const previewScreen = document.getElementById('previewScreen');
         const photoPreview = document.getElementById('photoPreview');
         const photoInput = document.getElementById('photoInput');
+        const descriptionInput = document.getElementById('descriptionInput');
 
         // Function to upload photo
         function uploadPhoto() {
@@ -84,7 +80,6 @@
                     photoPreview.src = e.target.result;
                     homeScreen.style.display = 'none';
                     previewScreen.style.display = 'block';
-                    attachPreviewEventListeners();
                 }
                 reader.readAsDataURL(file);
             }
@@ -95,14 +90,13 @@
             photoPreview.src = '';
             homeScreen.style.display = 'flex';
             previewScreen.style.display = 'none';
-            document.getElementById('descriptionInput').value = '';
+            descriptionInput.value = '';
         };
 
         // Function to download the photo and go back to the initial screen
         function makeMemry() {
             const date = new Date();
-            const description = document.getElementById('descriptionInput').value;
-            const fileName = `${date.getFullYear()}_${date.getMonth() + 1}_${date.getDate()} ${description}.jpg`;
+            const fileName = `${date.getFullYear()}_${date.getMonth() + 1}_${date.getDate()} ${descriptionInput.value}.jpg`;
 
             const downloadLink = document.createElement('a');
             downloadLink.href = photoPreview.src;
@@ -111,15 +105,8 @@
             photoPreview.src = '';
             homeScreen.style.display = 'flex';
             previewScreen.style.display = 'none';
-            document.getElementById('descriptionInput').value = '';
+            descriptionInput.value = '';
         };
-
-        // Function to attach event listeners for preview screen buttons
-        function attachPreviewEventListeners() {
-            document.getElementById('descriptionInput').value = '';
-            document.querySelector('#previewScreen button.smallButton:first-of-type').addEventListener('click', deletePhoto);
-            document.querySelector('#previewScreen button.smallButton:last-of-type').addEventListener('click', makeMemry);
-    }
     </script>
 </body>
 </html>
