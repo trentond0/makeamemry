@@ -1,0 +1,16 @@
+{
+  "name": "memry",
+  "short_name": "memry",
+  "description": "A web app for creating memries.",
+  "icons": [
+    {
+      "src": "images/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff"
+}
