@@ -8,49 +8,40 @@
     <link rel="apple-touch-icon" href="images/icon.png">
     <style>
         body {
+            margin: 0;
+            font-family: Helvetica, sans-serif;
+            font-size: 16px;
+        }
+
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            max-width: 500px;
+        }
+
+        .largeButton, .smallButton {
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .largeButton {
+            font-size: 2em;
+        }
+
+        #homeScreen {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            font-family: Helvetica, sans-serif;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 90%;
-            max-width: 500px;
-        }
-
-        .largeButton {
-            border: none;
-            background: none;
-            font-weight: bold;
-            font-size: 30px;
-            cursor: pointer;
-        }
-
-        .smallButton {
-            border: none;
-            background: none;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
         }
 
         #photoPreview {
             width: 100%;
-            border-radius: 1vw;
             object-fit: cover;
         }
 
         #descriptionInput {
             width: 100%;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-            font-size: 15px;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -62,10 +53,9 @@
     </style>
 </head>
 <body>
-    <div class="container" id="container">
-        <label for="photoInput" class="largeButton">make a memry
-            <input type="file" accept="image/*" capture style="display: none;" id="photoInput">
-        </label>
+    <div class="container" id="homeScreen">
+        <button class="largeButton" onclick="uploadPhoto()">make a memry</button>
+        <input type="file" accept="image/*" capture style="display: none;" id="photoInput">
     </div>
     <div id="previewScreen" class="container" style="display: none;"> <!-- Initially hide the preview screen -->
         <div><button class="smallButton" onclick="deletePhoto()">delete</button></div>
@@ -75,10 +65,15 @@
     </div>
 
     <script>
-        const container = document.getElementById('container');
+        const homeScreen = document.getElementById('homeScreen');
         const previewScreen = document.getElementById('previewScreen');
         const photoPreview = document.getElementById('photoPreview');
         const photoInput = document.getElementById('photoInput');
+
+        // Function to upload photo
+        function uploadPhoto() {
+            photoInput.click(); // Trigger the click event on the hidden file input
+        }
 
         // Function to show the preview of the taken photo
         photoInput.addEventListener('change', function(event) {
@@ -87,9 +82,9 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     photoPreview.src = e.target.result;
-                    container.style.display = 'none';
+                    homeScreen.style.display = 'none';
                     previewScreen.style.display = 'block';
-                    updatePhotoPreviewHeight();
+                    attachPreviewEventListeners();
                 }
                 reader.readAsDataURL(file);
             }
@@ -98,7 +93,7 @@
         // Function to delete the photo and go back to the initial screen
         function deletePhoto() {
             photoPreview.src = '';
-            container.style.display = 'flex';
+            homeScreen.style.display = 'flex';
             previewScreen.style.display = 'none';
             document.getElementById('descriptionInput').value = '';
         };
@@ -114,10 +109,17 @@
             downloadLink.download = fileName;
             downloadLink.click();
             photoPreview.src = '';
-            container.style.display = 'flex';
+            homeScreen.style.display = 'flex';
             previewScreen.style.display = 'none';
             document.getElementById('descriptionInput').value = '';
         };
+
+        // Function to attach event listeners for preview screen buttons
+        function attachPreviewEventListeners() {
+            document.getElementById('descriptionInput').value = '';
+            document.querySelector('#previewScreen button.smallButton:first-of-type').addEventListener('click', deletePhoto);
+            document.querySelector('#previewScreen button.smallButton:last-of-type').addEventListener('click', makeMemry);
+    }
     </script>
 </body>
 </html>
