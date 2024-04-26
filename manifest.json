@@ -3,7 +3,7 @@
     "short_name": "memry",
     "description": "A web app for capturing and sharing memrys.",
     "start_url": "/index.html",
-    "display": "standalone",
+    "display": "fullscreen",
     "orientation": "portrait-primary",
     "icons": [
         {
