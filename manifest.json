@@ -4,6 +4,7 @@
     "description": "A web app for capturing and sharing memrys.",
     "start_url": "/index.html",
     "display": "fullscreen",
+    "theme_color": "white",
     "orientation": "portrait-primary",
     "icons": [
         {
