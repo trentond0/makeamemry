@@ -6,69 +6,17 @@
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="white">
     <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="black">
     <title>memry</title>
+    <link type="text/css" href="/css/styles.css" rel="stylesheet">
+    <link rel="manifest" href="/manifest.json">
     <link rel="icon" type="image/png" href="img/icon.png">
     <link rel="apple-touch-icon" href="img/icon.png">
-    <link rel="manifest" href="/manifest.json">
-    <style>
-        .container {
-            margin: 0 auto;
-            width: 90%;
-            max-width: 500px;
-        }
-
-        .largeButton, .smallButton {
-            font-weight: bold;
-            color: black;
-            border: none;
-            background: none;
-            padding: 0;
-            cursor: pointer;
-        }
-
-        .largeButton {
-            font-size: 2em;
-        }
-
-        #homeScreen {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        #photoPreview {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        #descriptionInput {
-            color: black;
-            border: none;
-            background: none;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: black;
-                color: white;
-            }
-
-            .largeButton, .smallButton {
-                color: white;
-            }
-
-            #descriptionInput {
-                color: white;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="container" id="homeScreen">
         <button class="largeButton" onclick="uploadPhoto()">make a memry</button>
         <input type="file" accept="image/*" capture style="display: none;" id="photoInput">
     </div>
-    <div id="previewScreen" class="container" style="display: none;"> <!-- Initially hide the preview screen -->
+    <div class="container" id="previewScreen" style="display: none;"> <!-- Initially hide the preview screen -->
         <div><button class="smallButton" onclick="deletePhoto()">delete</button></div>
         <div class="photoContainer"><img src="" id="photoPreview" alt="photo preview"></div>
         <div><input type="text" id="descriptionInput" placeholder="enter a description"></div>
