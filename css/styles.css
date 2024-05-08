@@ -1,0 +1,51 @@
+.container {
+    margin: 0 auto;
+    width: 90%;
+    max-width: 500px;
+}
+
+.largeButton, .smallButton {
+    font-weight: bold;
+    color: black;
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.largeButton {
+    font-size: 2em;
+}
+
+#homeScreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#photoPreview {
+    width: 100%;
+    border-radius: 10px;
+}
+
+#descriptionInput {
+    color: black;
+    border: none;
+    background: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: black;
+        color: white;
+    }
+
+    .largeButton, .smallButton {
+        color: white;
+    }
+
+    #descriptionInput {
+        color: white;
+    }
+}
