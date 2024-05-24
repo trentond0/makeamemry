@@ -1,0 +1,38 @@
+body {
+    text-align:center;
+    font-family: Helvetica, sans-serif;
+}
+
+input {
+    background: none;
+    border: none;
+    text-align: center;
+}
+
+img {
+    width: 100%;
+    max-width: 300px;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: black;
+        color: white;
+    }
+
+    a:link {
+        color: dodgerblue;
+    }
+
+    a:visited {
+        color: violet;
+    }
+
+    input {
+        color: white;
+    }
+
+    input::placeholder {
+        color: darkgrey;
+    }
+}
