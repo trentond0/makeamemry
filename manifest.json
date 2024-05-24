@@ -1,6 +1,5 @@
 {
     "name": "memry",
-    "short_name": "memry",
     "description": "A web app for capturing and sharing memrys.",
     "start_url": "/",
     "display": "fullscreen",
